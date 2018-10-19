@@ -1,0 +1,10 @@
+# List-completion for http://projects.1010data.com/svn/sanchda/kd/
+_kd() {
+  local cur prev opts
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  labels="$(find ~/kd/ -maxdepth 1 -type f -exec basename {} \; | sed 's/\.l//g' | uniq)"
+  [ 1 -ne $COMP_CWORD ] && [[ ! $prev = "--"* ]] && return
+  COMPREPLY=( $(compgen -W "${labels}" -- ${cur}) )
+}
+complete -F _kd kd
